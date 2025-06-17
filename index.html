@@ -243,7 +243,7 @@ lg:w-52 lg:h-14 md:w-52 md:h-14 sm:w-44 sm:h-12 w-44 h-12 p-0 ">
 
     <div id="icon15">
         <i class="lg:text-[5rem] md:text-[4.5rem] sm:text-[4rem] text-[3rem] devicon-python-plain colored"></i>
-      </div>
+      </div
     
           
  </div>
@@ -435,7 +435,7 @@ flex flex-col h-auto bg-transparent  border-[1px] border-sky-600 ">
   overflow-hidden group">
    <!-- Added 'group' class -->
 <!-- Background Image with Hover Effect -->
-<div class="absolute inset-0 bg-[url('assets/images/car.jpg')] bg-cover bg-center 
+<div class="absolute inset-0 bg-[url('assets/images/car.jpg')] bg-contain bg-no-repeat bg-center 
     group-hover:opacity-30 transition-opacity duration-300"></div>
 
 <!-- Code Icon -->
@@ -668,5 +668,42 @@ A full-stack web application that allows users to search for bands, music events
     </footer>
 
 <script src="./index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS
+  emailjs.init("R9LKzAvu6mKnTUUjx"); // Use your PUBLIC key
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('contactForm');
+    if (!form) {
+      console.error("Form with id 'contactForm' not found.");
+      return;
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent page refresh
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      button.textContent = "Sending...";
+      emailjs.send("service_8j4xlbu", "template_b6paqkj", {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+      })
+        .then(function () {
+          alert("✅ Message sent successfully!");
+          form.reset();
+        })
+        .catch(function (error) {
+          console.error("❌ Failed to send message:", error);
+          alert("Failed to send message. Check console for details.");
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.textContent = "Send Message";
+        });
+    });
+  });
+</script>
 </body>
 </html>
